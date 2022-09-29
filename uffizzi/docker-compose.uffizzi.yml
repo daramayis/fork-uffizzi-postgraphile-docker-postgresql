@@ -1,0 +1,67 @@
+# This compose file is for demonstration only, do not use in prod.
+version: "3.3"
+
+# Uffizzi extension (required)
+x-uffizzi:
+  ingress:
+    service: loadbalancer
+    port: 5433  
+  continuous_previews:
+    delete_preview_after: 1h
+
+services:
+    db:
+        container_name: forum-example-db
+        restart: always
+        image: "${DB_IMAGE}"
+        build:
+            context: ../db
+        env_file:
+            - ../.env
+        environment:
+            # Add your credentials as GitHub Actions Secrets, then use the commented syntax below:
+            POSTGRES_DB: forum_example # "${POSTGRESDB}"       
+            POSTGRES_USER: postgres # "${PGUSER}"
+            POSTGRES_PASSWORD: postgres # "${PGPASSWORD}"
+        ports:
+            - 5432:5432
+        deploy:
+            resources:
+                limits:
+                  memory: 500M            
+
+    graphql:
+        container_name: forum-example-graphql
+        restart: always
+        image: "${GRAPHQL_IMAGE}"
+        build:
+            context: ../graphql
+        env_file:
+            - ../.env
+        environment:
+            # Add your credentials as GitHub Actions Secrets, then use the commented syntax below:
+            # DB
+            POSTGRES_DB: forum_example # "${POSTGRESDB}"       
+            POSTGRES_USER: postgres # "${PGUSER}"
+            POSTGRES_PASSWORD: postgres # "${PGPASSWORD}"
+            # GRAPHQL
+            DATABASE_URL: postgres://postgres:postgres@db:5432/forum_example # "${PGDATABASEURL}"
+        depends_on:
+            - db
+        ports:
+            - 5433:5433
+        command:
+            [
+                "--connection",
+                "${DATABASE_URL}",
+                "--port",
+                "5433",
+                "--schema",
+                "public",
+                "--append-plugins",
+                "postgraphile-plugin-connection-filter,custom-plugin",
+            ]
+        deploy:
+            resources:
+                limits:
+                    memory: 250M
