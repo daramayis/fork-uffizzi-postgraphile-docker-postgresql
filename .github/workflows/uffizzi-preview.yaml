@@ -91,7 +91,7 @@ jobs:
           DATABASE_URL=${{ secrets.DATABASE_URL }}
           export DATABASE_URL
           # Render simple template from environment variables.
-          envsubst < docker-compose.uffizzi.yml > docker-compose.rendered.yml
+          envsubst < uffizzi/docker-compose.uffizzi.yml > docker-compose.rendered.yml
           cat docker-compose.rendered.yml
       - name: Hash Rendered Compose File
         id: hash
