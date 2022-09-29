@@ -16,8 +16,6 @@ services:
         image: "${DB_IMAGE}"
         build:
             context: ../db
-        env_file:
-            - ./.env
         environment:
             # Add your credentials as GitHub Actions Secrets, then use the commented syntax below:
             POSTGRES_DB: forum_example # "${POSTGRESDB}"       
@@ -36,8 +34,6 @@ services:
         image: "${GRAPHQL_IMAGE}"
         build:
             context: ../graphql
-        env_file:
-            - ./.env
         environment:
             # Add your credentials as GitHub Actions Secrets, then use the commented syntax below:
             # DB
