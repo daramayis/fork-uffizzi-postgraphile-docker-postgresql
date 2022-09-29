@@ -18,7 +18,7 @@ services:
             context: ../db
         environment:
             # Add your credentials as GitHub Actions Secrets, then use the commented syntax below:
-            POSTGRES_DB: forum_example # "${POSTGRESDB}"       
+            POSTGRES_DB: forum_example # "${POSTGRESDB}"
             POSTGRES_USER: postgres # "${PGUSER}"
             POSTGRES_PASSWORD: postgres # "${PGPASSWORD}"
         ports:
@@ -37,7 +37,7 @@ services:
         environment:
             # Add your credentials as GitHub Actions Secrets, then use the commented syntax below:
             # DB
-            POSTGRES_DB: forum_example # "${POSTGRESDB}"       
+            POSTGRES_DB: forum_example # "${POSTGRESDB}"
             POSTGRES_USER: postgres # "${PGUSER}"
             POSTGRES_PASSWORD: postgres # "${PGPASSWORD}"
             # GRAPHQL
