@@ -14,8 +14,6 @@ services:
         container_name: forum-example-db
         restart: always
         image: "${DB_IMAGE}"
-        build:
-            context: ../db
         environment:
             # Add your credentials as GitHub Actions Secrets, then use the commented syntax below:
             POSTGRES_DB: forum_example # "${POSTGRESDB}"
@@ -32,8 +30,6 @@ services:
         container_name: forum-example-graphql
         restart: always
         image: "${GRAPHQL_IMAGE}"
-        build:
-            context: ../graphql
         environment:
             # Add your credentials as GitHub Actions Secrets, then use the commented syntax below:
             # DB
